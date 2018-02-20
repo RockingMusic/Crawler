@@ -110,7 +110,7 @@ void loop() {
   Serial.println("Loop Start");
   while(!mega.available());
   Serial.println("Mega on");
-  for(int i = 0; i <= 5; i++){
+  for(int i = 0; i <= 6; i++){
     sData[i] = mega.readStringUntil(',');
     while(!mega.available());
   }
@@ -120,15 +120,15 @@ void loop() {
   Serial.println("TempOUT:  " + sData[3]);
   Serial.println("Pressure: " + sData[4]);
   Serial.println("Depth: " + sData[5] + "\n");
-  lcd.clear();
+  lcd.clear();  
   lcd.home();
-  lcd.print("Humidity:"+ sData[0]);
+  lcd.print("Inside Temp: " + sData[2]);
   lcd.setCursor(0, 1);
-  lcd.print("Heat:" + sData[1]);
+  lcd.print("Outside Temp: " + sData[3]);
   lcd.setCursor(0, 2);
-  lcd.print("Inside Temp:" + sData[2]);
+  lcd.print("Depth: " + sData[4]);
   lcd.setCursor(0, 3);
-  lcd.print("Outside Temp:" + sData[3]);
+  lcd.print("Leak: " + sData[6]);
   
 
   ////////////////////////////////////////////////////////////////////////

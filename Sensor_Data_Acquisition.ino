@@ -47,13 +47,7 @@ void setup() {
 ////////////////////////////////////////////////////////////////////////
 void loop() {
   // put your main code here, to run repeatedly:
-  int leak = digitalRead(SOSPIN);
-  if(leak == HIGH){
-    Serial.println("LEAK!!!!");
-  }
-  else if(leak == LOW){
-    Serial.println("Dry");
-  }
+
   ////////////////////////////////////////////////////////////////////////
   //get DHT22 sensor readings and output readings
   ////////////////////////////////////////////////////////////////////////
@@ -96,6 +90,16 @@ void loop() {
   Serial.print("Altitude: "); 
   Serial.print(sensor.altitude()); 
   Serial.println(" m above mean sea level");
+  
+  int leak = digitalRead(SOSPIN);
+  if(leak == HIGH){
+    Serial.println("LEAK!!!!");
+    data.print("LEAK!!!,");
+  }
+  else if(leak == LOW){
+    Serial.println("Dry");
+    data.print("No Leak!,");
+  }
   
   delay(10000);
 }
