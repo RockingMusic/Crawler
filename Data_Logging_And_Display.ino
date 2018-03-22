@@ -128,10 +128,11 @@ void loop() {
   lcd.setCursor(0, 1);
   lcd.print("Outside Temp: " + sData[3]);
   lcd.setCursor(0, 2);
-  lcd.print("Depth: " + sData[4]);
+  lcd.print("Pressure: " + sData[4]);
   lcd.setCursor(0, 3);
-  lcd.print("Leak: " + sData[6]);
-  
+  lcd.print("Depth: " + sData[5]);
+  lcd.print(" Leak: " + sData[6]);
+    
 
   ////////////////////////////////////////////////////////////////////////
   //log sensor data
