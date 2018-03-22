@@ -25,13 +25,14 @@
 #define D7_pin 7
 //SD
 #define chipSelect 4
-
+#define SDCON 8
 LiquidCrystal_I2C lcd(I2C_ADDR, En_pin, Rw_pin, Rs_pin, D4_pin, D5_pin, D6_pin, D7_pin);
 
 SoftwareSerial mega(10, 11);// (Rx, Tx)
 
 File myData;
-String fDone, sData[6], wData;
+String fDone, sData[7], wData1, wData2;
+int DClog;
 
 ////////////////////////////////////////////////////////////////////////
 //void setup()
@@ -44,6 +45,7 @@ void setup() {
   lcd.begin(20, 4); //16x2 LCD                                                              
   Serial.begin(9600);
   mega.begin(4800);
+  pinMode(SDCON, INPUT);
   
   lcd.setBacklightPin(BACKLIGHT_PIN, POSITIVE);
   lcd.setBacklight(HIGH);
@@ -94,7 +96,7 @@ void setup() {
       lcd.clear();
       lcd.home();
       lcd.print("File Created.");
-      myData.println("Humidity, Heat, TempIN, TempOUT");
+      myData.println("Humidity, Heat, TempIN, TempOUT, Pressure, Depth, Leak");
       myData.close();
     } 
   }
@@ -134,19 +136,35 @@ void loop() {
   ////////////////////////////////////////////////////////////////////////
   //log sensor data
   ////////////////////////////////////////////////////////////////////////
-  //wData = sData[0] + "," + sData[1] + "," + sData[2] + "," + sData[3] + "\n";
-  //wData = sData[0] + "," + sData[1] + "\n";
-  //saveData(myData, wData);
-  
+  wData1 = sData[0] + "," + sData[1] + "," + sData[2] + "," + sData[3] + "," + sData[4] + ",";
+  wData2 = sData[5] + "," + sData[6];
+  DClog = digitalRead(SDCON);
+  if(DClog == HIGH){//Disconnect SD card.
+    while(1){
+      lcd.clear();
+      lcd.home();
+      lcd.print("SD safe to remove.");
+      lcd.setCursor(0,1);
+      lcd.print("Insert SD when done.");
+      lcd.setCursor(0,2);
+      lcd.print("Restart device");
+      lcd.setCursor(0,3);
+      lcd.print("to log data.");
+    }
+  }
+  else{
+      saveData(myData, wData1, wData2);
+  }
 }
 //SD logging function.
 ////////////////////////////////////////////////////////////////////////
 //log data to SD card
 ////////////////////////////////////////////////////////////////////////
-void saveData(File FData, String Data){ 
+void saveData(File FData, String Data1, String Data2){ 
   FData = SD.open("Data.txt", FILE_WRITE);
   if(FData){
-    FData.println(Data);
+    FData.print(Data1);
+    FData.println(Data2);
     FData.close();
   }
   else{
