@@ -149,7 +149,12 @@ void loop() {
       lcd.setCursor(0,2);
       lcd.print("Restart device");
       lcd.setCursor(0,3);
-      lcd.print("to log data.");
+      lcd.print("Inside Temp: " + sData[2]);
+      for(int i = 0; i <= 6; i++){
+        sData[i] = mega.readStringUntil(',');
+        while(!mega.available());
+      }
+  }
     }
   }
   else{
