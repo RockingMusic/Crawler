@@ -31,7 +31,7 @@ LiquidCrystal_I2C lcd(I2C_ADDR, En_pin, Rw_pin, Rs_pin, D4_pin, D5_pin, D6_pin, 
 SoftwareSerial mega(10, 11);// (Rx, Tx)
 
 File myData;
-String fDone, sData[7], wData1, wData2;
+String fDone, sData[6], wData1, wData2;
 int DClog;
 
 ////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ void setup() {
   ////////////////////////////////////////////////////////////////////////
   //Initialize LCD display and software serial communications.
   ////////////////////////////////////////////////////////////////////////
-  lcd.begin(20, 4); //16x2 LCD                                                              
+  lcd.begin(20, 4); //20x4 LCD                                                              
   Serial.begin(9600);
   mega.begin(4800);
   pinMode(SDCON, INPUT);
@@ -96,7 +96,7 @@ void setup() {
       lcd.clear();
       lcd.home();
       lcd.print("File Created.");
-      myData.println("Humidity, Heat, TempIN, TempOUT, Pressure, Depth, Leak");
+      myData.println("Humidity, Heat, TempIN, TempOUT, Pressure, Depth");
       myData.close();
     } 
   }
@@ -131,14 +131,13 @@ void loop() {
   lcd.print("Pressure: " + sData[4]);
   lcd.setCursor(0, 3);
   lcd.print("Depth: " + sData[5]);
-  lcd.print(" Leak: " + sData[6]);
     
 
   ////////////////////////////////////////////////////////////////////////
   //log sensor data
   ////////////////////////////////////////////////////////////////////////
   wData1 = sData[0] + "," + sData[1] + "," + sData[2] + "," + sData[3] + "," + sData[4] + ",";
-  wData2 = sData[5] + "," + sData[6];
+  wData2 = sData[5];
   DClog = digitalRead(SDCON);
   if(DClog == HIGH){//Disconnect SD card.
     while(1){

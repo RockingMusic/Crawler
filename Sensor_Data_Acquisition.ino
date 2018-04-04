@@ -92,15 +92,10 @@ void loop() {
   Serial.println(" m above mean sea level");
   
   int leak = digitalRead(SOSPIN);
-  if(leak == HIGH){
+  while(leak == HIGH){
     Serial.println("LEAK!!!!");
     data.print("LEAK!!!,");
   }
-  else if(leak == LOW){
-    Serial.println("Dry");
-    data.print("No Leak!,");
-  }
-  
   delay(10000);
 }
 
