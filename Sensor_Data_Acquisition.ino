@@ -95,6 +95,7 @@ void loop() {
   while(leak == HIGH){
     Serial.println("LEAK!!!!");
     data.print("LEAK!!!,");
+    leak = digitalRead(SOSPIN);
   }
   delay(10000);
 }
