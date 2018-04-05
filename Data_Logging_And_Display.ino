@@ -44,7 +44,7 @@ void setup() {
   ////////////////////////////////////////////////////////////////////////
   lcd.begin(20, 4); //20x4 LCD                                                              
   Serial.begin(9600);
-  mega.begin(4800);
+  mega.begin(2400);
   pinMode(SDCON, INPUT);
   
   lcd.setBacklightPin(BACKLIGHT_PIN, POSITIVE);

@@ -29,9 +29,9 @@ void setup() {
   pinMode(SOSPIN, INPUT);
   Serial.begin(9600);           //Start Serial for output
   Serial.println("Starting!");
-  data.begin(4800);
+  data.begin(2400);
   dht.begin();
-  Wire.begin();
+  Wire.begin();                                                                                                                                                                                                                                                                                                                                 
 
   while(!sensor.init()){
     Serial.println("Pressure sensor initilization failed!");
