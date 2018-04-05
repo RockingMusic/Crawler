@@ -31,7 +31,7 @@ LiquidCrystal_I2C lcd(I2C_ADDR, En_pin, Rw_pin, Rs_pin, D4_pin, D5_pin, D6_pin, 
 SoftwareSerial mega(10, 11);// (Rx, Tx)
 
 File myData;
-String fDone, sData[6], wData1, wData2;
+String fDone, sData[5], wData1, wData2;
 int DClog;
 
 ////////////////////////////////////////////////////////////////////////
@@ -112,7 +112,7 @@ void loop() {
   Serial.println("Loop Start");
   while(!mega.available());
   Serial.println("Mega on");
-  for(int i = 0; i <= 6; i++){
+  for(int i = 0; i <= 5; i++){
     sData[i] = mega.readStringUntil(',');
     while(!mega.available());
   }
@@ -150,12 +150,11 @@ void loop() {
       lcd.print("Restart device");
       lcd.setCursor(0,3);
       lcd.print("Inside Temp: " + sData[2]);
-      for(int i = 0; i <= 6; i++){
+      for(int i = 0; i <= 5; i++){
         sData[i] = mega.readStringUntil(',');
         while(!mega.available());
       }
   }
-    }
   }
   else{
       saveData(myData, wData1, wData2);
