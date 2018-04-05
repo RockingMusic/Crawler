@@ -116,6 +116,19 @@ void loop() {
     sData[i] = mega.readStringUntil(',');
     while(!mega.available());
   }
+  if (sData[0] == String("LEAK!!!!"))
+  {
+    lcd.clear();
+    lcd.home();
+    lcd.print("LEAK!!!!");
+    lcd.setCursor(0,1);
+    lcd.print("LEAK!!!!");
+    lcd.setCursor(0,2);
+    lcd.print("LEAK!!!!");
+    lcd.setCursor(0,3);
+    lcd.print("LEAK!!!!");
+    while(1);
+  }
   Serial.println("Humidity: " + sData[0]);
   Serial.println("Heat:     " + sData[1]);
   Serial.println("TempIN:   " + sData[2]);
