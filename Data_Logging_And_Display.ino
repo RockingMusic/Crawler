@@ -31,7 +31,7 @@ LiquidCrystal_I2C lcd(I2C_ADDR, En_pin, Rw_pin, Rs_pin, D4_pin, D5_pin, D6_pin, 
 SoftwareSerial mega(10, 11);// (Rx, Tx)
 
 File myData;
-String fDone, sData[6], wData1, wData2;
+String fDone, sData[5], wData1, wData2;
 int DClog;
 
 ////////////////////////////////////////////////////////////////////////
@@ -112,9 +112,22 @@ void loop() {
   Serial.println("Loop Start");
   while(!mega.available());
   Serial.println("Mega on");
-  for(int i = 0; i <= 6; i++){
+  for(int i = 0; i <= 5; i++){
     sData[i] = mega.readStringUntil(',');
     while(!mega.available());
+  }
+  if (sData[0] == String("LEAK!!!!"))
+  {
+    lcd.clear();
+    lcd.home();
+    lcd.print("LEAK!!!!");
+    lcd.setCursor(0,1);
+    lcd.print("LEAK!!!!");
+    lcd.setCursor(0,2);
+    lcd.print("LEAK!!!!");
+    lcd.setCursor(0,3);
+    lcd.print("LEAK!!!!");
+    while(1);
   }
   Serial.println("Humidity: " + sData[0]);
   Serial.println("Heat:     " + sData[1]);
@@ -150,12 +163,11 @@ void loop() {
       lcd.print("Restart device");
       lcd.setCursor(0,3);
       lcd.print("Inside Temp: " + sData[2]);
-      for(int i = 0; i <= 6; i++){
+      for(int i = 0; i <= 5; i++){
         sData[i] = mega.readStringUntil(',');
         while(!mega.available());
       }
   }
-    }
   }
   else{
       saveData(myData, wData1, wData2);
