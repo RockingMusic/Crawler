@@ -185,7 +185,7 @@ void saveData(File FData, String Data1, String Data2){//SD card save data functi
     FData.println(Data2);//print the second data string to file
     FData.close();//Close file to save the data
   }
-  else{//If the file does not open
+  else{//If the file does not open, display a message
     Serial.println("SD Card not connected. Reconnect the SD to log data.");
     lcd.clear();
     lcd.home();
